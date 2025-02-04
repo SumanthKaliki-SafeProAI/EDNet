@@ -29,9 +29,10 @@ The performance of the seven variants of EDNet on the VisDrone dataset is summar
 Clone the repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/zsniko/EDNet.git
+git clone https://github.com/SumanthKaliki-SafeProAI/EDNet.git
 cd EDNet
 pip install -r requirements.txt
+pip install -e .
 ```
 
 </details>
@@ -65,7 +66,23 @@ model.val(data="visdrone-det.yaml", split='val')
 model('ednet/assets/test1.jpg')  
 ```
 
+To predict using pre-trained model (for example single class), use the `predict` method and provide the path to the image:
+
+```python
+from ednet import EDNet
+# Load a pretrained model (choose from: t,n,s,m,b,l,x)
+model = EDNet("pretrained/tiny.pt") 
+# Predict
+predictions = model.predict(imgsz=image_size,
+    source=input_image,
+    conf=0.25,
+    save=False,
+    augment=True,
+    single_cls=True)
+```
+
 You can export the model to different formats based on your hardware, such as TensorRT, ONNX, and OpenVINO. The `format` argument specifies the export format (`engine` for TensorRT; for ONNX and OpenVINO, use the format name directly).
+
 ```python
 # Load a pretrained model (choose from: t,n,s,m,b,l,x)
 model = EDNet("pretrained/tiny.pt") 
