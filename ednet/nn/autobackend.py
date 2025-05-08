@@ -11,6 +11,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from PIL import Image
+import openvino as ov
 
 from ednet.utils import ARM64, IS_JETSON, IS_RASPBERRYPI, LINUX, LOGGER, ROOT, yaml_load
 from ednet.utils.checks import check_requirements, check_suffix, check_version, check_yaml
@@ -193,10 +194,6 @@ class AutoBackend(nn.Module):
 
         # OpenVINO
         elif xml:
-            LOGGER.info(f"Loading {w} for OpenVINO inference...")
-            check_requirements("openvino>=2024.0.0")
-            import openvino as ov
-
             core = ov.Core()
             w = Path(w)
             if not w.is_file():  # if not *.xml
